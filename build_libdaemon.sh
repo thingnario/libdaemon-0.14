@@ -41,3 +41,4 @@ fi
 make clean
 make
 sudo "PATH=$PATH" make install
+echo sudo rm $tool_chain_path/lib/libdaemon.so*
