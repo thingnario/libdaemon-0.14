@@ -30,6 +30,7 @@
 #include <stdlib.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include <sys/select.h>
 #include <limits.h>
 #include <fcntl.h>
 #include <stdio.h>
