@@ -1,9 +1,9 @@
 #!/bin/bash
 
-if [ $# -ne 1 ]; then
-    echo $0: usage: cross_compile_library.sh ARCH 
-    echo "example: usage: cross_compile_library.sh [ arm-linux | arm-linux-gnueabihf | arm-linux-gnueabi ]"
-    exit 1
+if [ "$#" -ne 2 ]; then
+    echo "Usage: ./build_libdaemon.sh tool_chain_path install_path!"
+    echo "Example: ./build_luibdaemon.sh /usr/local/arm-linux /Desktop/eric/logger/build/moxa-ia240/libdaemon"
+    exit
 fi
 
 export PATH="$PATH:$1/bin"
@@ -27,7 +27,7 @@ if [ "$ARCH" == "" ]; then
 	export RANLIB=ranlib
 	export CC=gcc
 	export NM=nm
-	./configure --prefix=$tool_chain_path
+	./configure --prefix=$2
 else
 	export AR=${ARCH}-ar
 	export AS=${ARCH}-as
@@ -35,10 +35,10 @@ else
 	export RANLIB=${ARCH}-ranlib
 	export CC=${ARCH}-gcc
 	export NM=${ARCH}-nm
-	./configure --prefix=$tool_chain_path --target=${ARCH} --host=${ARCH} ac_cv_func_setpgrp_void=yes
+	./configure --prefix=$2 --target=${ARCH} --host=${ARCH} ac_cv_func_setpgrp_void=yes
 fi
 
 make clean
 make
-sudo "PATH=$PATH" make install
-echo sudo rm $tool_chain_path/lib/libdaemon.so*
+make install
+rm $2/lib/libdaemon.so*
